@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:4.0.11
+    environment:
+      - "affinity:image==redis"
+    volumes:
+      - local_redis_data:/data
+  
+  stream_ccu:
+    image: stream_ccu:latest
+    build: .
+    environment:
+      - REDIS_HOST=redis:6379
+    ports:
+      - 8080:8080
+volumes:
+  local_redis_data:
